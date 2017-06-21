@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     logger = require('pine')(),
     findOrCreate = require('mongoose-findorcreate'),
     ObjectId = require('mongoose').Types.ObjectId,
-    uuid = require('node-uuid');
+    uuid = require('uuid');
 
 var productModel = function () {
 

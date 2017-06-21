@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     appUtils = require('../../lib/appUtils'),
     findOrCreate = require('mongoose-findorcreate'),
     crypto = require('../../lib/crypto'),
-    uuid = require('node-uuid');
+    uuid = require('uuid');
 
 var paypalUserModel = function () {
 

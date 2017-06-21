@@ -2,6 +2,7 @@
 
 
 module.exports = function copyto(grunt) {
+
     // Load task
     grunt.loadNpmTasks('grunt-copy-to');
 
@@ -9,6 +10,7 @@ module.exports = function copyto(grunt) {
 	return {
 	    build: {
             files: [{
+                expand: true,
                 cwd: 'public',
                 src: ['**/*'],
                 dest: '.build/'
@@ -23,6 +25,7 @@ module.exports = function copyto(grunt) {
 	    },
         package: {
             files: [{
+                expand: true,
                 cwd: '.',
                 src: ['**/*','.build/**'],
                 dest: '.package/'
@@ -35,6 +38,7 @@ module.exports = function copyto(grunt) {
         },
         heroku: {
             files: [{
+               expand: true,
                 cwd: '.',
                 src: ['**/*','.build/**','!node_modules/**'],
                 dest: '.heroku/'

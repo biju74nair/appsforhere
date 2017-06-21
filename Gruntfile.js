@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     delete packageInfo.herokuDependencies;
   });
   // Register group tasks
-  grunt.registerTask('build', [
+  grunt.registerTask('build', [ 
     'jshint',
     'less',
     'uglify:build',

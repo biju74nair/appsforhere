@@ -72,9 +72,11 @@ App.prototype.listen = function (port, callback) {
         });
         // Create the mubsub channel for socket.io with the configured settings
         mubsub.channel('socket.io', self.config.get('socket.io').mubsub);
-        self.socketio.adapter(require('socket.io-adapter-mongo')({
-            client: mubsub
-        }));
+        // self.socketio.adapter(require('socket.io-adapter-mongo')({
+        //     client: mubsub
+        // }));
+
+        self.socketio.adapter(require('socket.io-adapter-mongo')(self.config.get('mongoUrl')));
         // There's a problem with socket.io-adapter-mongo in that it doesn't catch channel errors
         // and that brings down the server. They can happen in 'normal operation' for temporary network issues
         mubsub.channels['socket.io'].on('error', function (e) {
@@ -86,6 +88,7 @@ App.prototype.listen = function (port, callback) {
     }
 
     var workerCount;
+
     if (this.config.get('cluster') && (workerCount = this.config.get('cluster').workers)) {
         logger.info('Using %d cluster workers', workerCount);
     } else {
@@ -93,12 +96,26 @@ App.prototype.listen = function (port, callback) {
         logger.info('Defaulting to %d cluster workers (%d cpus)', workerCount, require('os').cpus().length);
     }
     if (workerCount > 1) {
-        var stickyServer = sticky(workerCount, clusterStart);
-        stickyServer.listen(port, function (err) {
-            self.emit('listening', err);
-            logger.info('[%s] Sticky server listening on http://localhost:%d', self.express.settings.env, port);
-            if (callback) { callback(err); }
+        // var stickyServer = sticky(workerCount, clusterStart);
+        // stickyServer.listen(port, function (err) {
+        //     self.emit('listening', err);
+        //     logger.info('[%s] Sticky server listening on http://localhost:%d', self.express.settings.env, port);
+        //     if (callback) { callback(err); }
+        // });
+
+        var cluster = require('cluster');
+        var server = require('http').createServer(function(req, res) {
+          res.end('worker: ' + cluster.worker.id);
         });
+        if (!sticky.listen(server, port)) {
+
+          server.once('listening', function() {
+            console.log('server started on port'+port);
+          });
+        }
+
+
+
     } else {
         clusterStart();
         this.server.listen(port, function (err) {
@@ -116,6 +133,7 @@ App.prototype.configureQueue = function () {
     var queueOptions = {
         process: true
     };
+
     if (process.env.NO_QUEUE_PROCESSING) {
         queueOptions.process = false;
     }
@@ -128,12 +146,12 @@ App.prototype.configureQueue = function () {
  */
 App.prototype.configureLogging = function () {
     // Make sure the collection is created before we start logging.
-    var Log = require('./models/log'), self = this;
-    new Log({message: 'Ensuring capped collection.'}).save(function () {
-        var MongoDB = require('winston-mongodb').MongoDB;
-        // only way to set the default logger config is via the private pine impl
-        logger._impl.add(MongoDB, self.config.get('winston-mongodb'));
-    });
+    // var Log = require('./models/log'), self = this;
+    // new Log({message: 'Ensuring capped collection.'}).save(function () {
+    //     var MongoDB = require('winston-mongodb').MongoDB;
+    //     // only way to set the default logger config is via the private pine impl
+    //     logger._impl.add(MongoDB, self.config.get('winston-mongodb'));
+    // });
 };
 
 /**

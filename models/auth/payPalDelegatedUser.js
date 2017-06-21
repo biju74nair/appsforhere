@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     findOrCreate = require('mongoose-findorcreate'),
     logger = require('pine')(),
     crypto = require('../../lib/crypto'),
-    uuid = require('node-uuid'),
+    uuid = require('uuid'),
     Token = require('./token'),
     payPalUser = require('./payPalUser');
 

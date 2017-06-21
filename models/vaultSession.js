@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 var crypto = require('../lib/crypto');
 var pki = require('node-forge').pki, rsa = pki.rsa;
 var RSAKey = require('../lib/rsa');

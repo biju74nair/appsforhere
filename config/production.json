@@ -1,6 +1,6 @@
 {
     "cluster": {
-        "workers": 1
+        "workers": 2
     },
     "express": {
         "view cache": false,
@@ -39,7 +39,7 @@
                     "path:./public",
                     "path:./.build",
                     {
-                        "dust": {
+                        "template": {
                             "module": "kraken-devtools/plugins/dustjs",
                             "files": "/templates/**/*.js",
                             "base": "templates",

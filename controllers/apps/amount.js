@@ -4,7 +4,7 @@ var logger = require('pine')(),
     accounting = require('accounting'),
     checkinUtils = require('../../lib/apps/utils'),
     App = require('../../models/app'),
-    uuid = require('node-uuid'),
+    uuid = require('uuid'),
     marky = require('marky-markdown');
 
 module.exports = function (router) {
