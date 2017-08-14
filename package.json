@@ -85,9 +85,9 @@
   "herokuDependencies": {
     "connect-mongo": "^0.4.1",
     "marky-markdown": "^5.0.2",
-    "mongoose": "^3.8.20",
+    "mongoose": "^4.11.7",
     "pajk-lwip": "0.2.0",
-    "socket.io": "^1.2.1",
+    "socket.io": "^2.0.3",
     "mubsub": "^1.0.4"
   },
   "generator-kraken": {

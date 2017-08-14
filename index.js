@@ -33,6 +33,7 @@ var mongo = require('./lib/mongo'),
  * This class makes the code a little more testable, but make no mistake - this is meant to be a singleton.
  */
 var App = module.exports = function AppConstructor() {
+
     var self = this;
     this.mongoReady = false;
     // Created when we're the master in the listen function.
@@ -58,11 +59,9 @@ var App = module.exports = function AppConstructor() {
 };
 
 util.inherits(App, EventEmitter);
-
 // The kraken generator uses app.listen, but we need to get lower make socket.io work (with sticky cluster routing)
 App.prototype.listen = function (port, callback) {
     var sticky = require('sticky-session'), self = this;
-
     function clusterStart() {
         self.server = require('http').Server(self.express);
         self.socketio = require('socket.io')(self.server);
@@ -138,6 +137,7 @@ App.prototype.configureQueue = function () {
         queueOptions.process = false;
     }
     Queue.init(mongo.db, this.config, queueOptions);
+
 };
 
 /**

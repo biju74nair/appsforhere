@@ -96,10 +96,10 @@ module.exports = function (router) {
             if (req.session.redirectUrl) {
                 var url = req.session.redirectUrl;
                 delete req.session.redirectUrl;
-                console.log("--1----");
+                console.log('--1----');
                 res.redirect(url);
             } else {
-              console.log("--2----");
+              console.log('--2----');
                 res.redirect('/');
             }
         });
