@@ -15,6 +15,8 @@ if (process.env.LONGJOHN) {
 }
 
 var app = new (require('./index'))();
+
+//ready is emitted once MongoDB is connected
 app.once('ready', function () {
    app.listen(process.env.PORT || 8000);
 });

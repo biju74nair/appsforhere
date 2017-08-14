@@ -94,29 +94,19 @@ App.prototype.listen = function (port, callback) {
         workerCount = Math.min(6, require('os').cpus().length);
         logger.info('Defaulting to %d cluster workers (%d cpus)', workerCount, require('os').cpus().length);
     }
+
+    clusterStart();
+
     if (workerCount > 1) {
-        // var stickyServer = sticky(workerCount, clusterStart);
-        // stickyServer.listen(port, function (err) {
-        //     self.emit('listening', err);
-        //     logger.info('[%s] Sticky server listening on http://localhost:%d', self.express.settings.env, port);
-        //     if (callback) { callback(err); }
-        // });
 
-        var cluster = require('cluster');
-        var server = require('http').createServer(function(req, res) {
-          res.end('worker: ' + cluster.worker.id);
-        });
-        if (!sticky.listen(server, port)) {
-
-          server.once('listening', function() {
-            console.log('server started on port'+port);
+        if (!sticky.listen(this.server, port)) {
+          // Master code
+          this.server.once('listening', function() {
+            logger.info('[%s] Sticky server listening on %d', self.express.settings.env, port);
           });
         }
 
-
-
     } else {
-        clusterStart();
         this.server.listen(port, function (err) {
             self.emit('listening', err);
             logger.info('[%s] Standard server listening on http://localhost:%d', self.express.settings.env, port);
