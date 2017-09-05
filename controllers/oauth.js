@@ -3,7 +3,7 @@
 var logger = require('pine')();
 var passport = require('passport');
 var Token = require('../models/auth/token');
-var PayPalUser = require('../models/auth/payPalUser');
+// var PayPalUser = require('../models/auth/payPalUser');
 var PayPalDelegatedUser = require('../models/auth/payPalDelegatedUser');
 var appUtils = require('../lib/appUtils');
 var userDeserialize = require('../lib/passportSetup').deserialize;

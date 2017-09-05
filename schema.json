@@ -1,0 +1,170 @@
+//THIS FILE IS USED TO SEND TO INFOSEC FOR APPROVAL
+//RITM0046932 - reference
+//As per their request the email is masked in passportSetup
+
+var hostedAppSchema = mongoose.Schema({
+    owner_id: mongoose.Schema.Types.ObjectId,
+    encryptedConfiguration: Buffer,
+    environment: String,
+    return_urls: [String]
+});
+
+var paypalUserSchema = mongoose.Schema({
+    name: String,
+    profileId: { type: String, unique: true },
+    email: String, //logged in user
+    currency: String,
+    country: String,
+    groups: [String],
+    environment: String
+});
+
+var paypalUserSchema = mongoose.Schema({
+    name: String,
+    profileId: String,
+    // Encrypted with a cookie that is only stored on the original delegation link
+    encrypted_refresh_token: String,
+    email: String,
+    currency: String,
+    country: String,
+    createDate: Date,
+    lastLogin: Date,
+    environment: String,
+    allowedResources: [String]
+});
+
+var tokenSchema = mongoose.Schema({
+    // Encrypted with a cookie that is only stored on the browser
+    encrypted_refresh_token: String,
+    // Expire this entry after two weeks of non-use
+    last_used: { type:Date, expires: '14d' }
+});
+
+var deviceSchema = mongoose.Schema({
+    key: {type:String,index:true},
+    deviceId: String,
+    host: String,
+    available: Boolean,
+    support:[String]
+});
+
+var deviceSchema = mongoose.Schema({
+    profileId: {type: String, index: true},
+    terminalId: String,
+    activationCode: String,
+    timestamp: { type: Date, default: Date.now },
+    configuration: mongoose.Schema.Types.Mixed,
+    encryptedConfiguration: Buffer,
+    environment: String
+});
+
+var devicePermSchema = mongoose.Schema({
+    profileId: {type:String,index:true},
+    key: String
+});
+
+var devicePrefSchema = mongoose.Schema({
+    permissionId: {type:mongoose.Schema.Types.ObjectId,index:true},
+    deviceId: String,
+    name: String
+});
+
+var appSchema = mongoose.Schema({
+    name: String,
+    profileId: String,
+    applicationType: String,
+    environment:String,
+    configuration: mongoose.Schema.Types.Mixed,
+    encryptedConfiguration: Buffer
+});
+
+var imageSchema = mongoose.Schema({
+    // We want full randomness...
+    hash: {type: String, index: true},
+    width: Number,
+    height: Number,
+    png: Buffer,
+    originalImage: Buffer
+});
+
+var logSchema = mongoose.Schema({
+    message: String,
+    level: String,
+    hostname: String,
+    timestamp: Date,
+    meta: mongoose.Schema.Types.Mixed
+},{
+    capped: 1000000
+});
+
+var modelSchema = mongoose.Schema({
+    name: String,
+    merchantId: mongoose.Schema.Types.ObjectId,
+    products: [
+        {
+            name: String,
+            description: String,
+            photoUrl: String,
+            tags: [String],
+            taxRateName: String,
+            // Note you'll have to go through and rename these because 'options' is not allowed
+            productOptions: [String],
+            price: String,
+            barcode: String,
+            quantityType: String,
+            priceType: String,
+            referenceId: String,
+            variations: [
+                {
+                    name: String,
+                    price: String,
+                    barcode: String,
+                    referenceId: String
+                }
+            ]
+        }
+    ],
+    taxRates: [
+        {
+            rate: String,
+            name: String,
+            referenceId: String,
+            default: Boolean
+        }
+    ],
+    // Note you'll have to go through and rename these because 'options' is not allowed
+    productOptions: [
+        {
+            name: String,
+            select: String,
+            values: [
+                {
+                    price: String,
+                    name: String
+                }
+            ]
+        }
+    ],
+    tags: [
+        {
+            name: String
+        }
+    ]
+});
+
+var orderSchema = mongoose.Schema({
+    locationId: {type:String,index:true},
+    profileId: String,
+    name: String,
+    invoiceId: String
+});
+
+var vaultSchema = mongoose.Schema({
+    card_id: String,
+    short_code: {type:String,unique:true},
+    referenceId: String,
+    profileId: String,
+    timestamp: Date,
+    valid_until: String,
+    number: String
+});
