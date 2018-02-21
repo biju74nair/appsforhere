@@ -27,6 +27,7 @@ var mongo = require('./lib/mongo'),
     Queue = require('./lib/queue'),
     util = require('util'),
     EventEmitter = require('events').EventEmitter,
+    helmet = require('helmet'),
     appUtils = require('./lib/appUtils');
 
 /**
@@ -56,6 +57,16 @@ var App = module.exports = function AppConstructor() {
     // express-winston logger makes sense BEFORE the router.
     this.configureExpressWinston();
     this.express.use(kraken(this.options));
+
+    //SECURITY HEADERS: START
+    this.express.use(helmet());
+    this.express.disable('x-powered-by');
+    this.express.use(helmet.contentSecurityPolicy({
+        directives: {
+            scriptSrc: ["'self'", "'unsafe-inline'"],
+        }
+      }));
+    //SECURITY HEADERS: END
 };
 
 util.inherits(App, EventEmitter);

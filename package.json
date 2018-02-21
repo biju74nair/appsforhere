@@ -2,7 +2,7 @@
   "name": "appsforhere",
   "version": "0.3.0",
   "description": "Enhancements and applications for PayPal Here and PayPal in Retail",
-  "nodeversion" : "7.9.0",
+  "nodeversion": "7.9.0",
   "author": "Max Metral, Biju Nair",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "express-winston": "^2.4.0",
     "findit": "^2.0.0",
     "form-data": "^2.2.0",
+    "helmet": "^3.11.0",
     "image-type": "^3.0.0",
     "kraken-devtools": "^1.0.0",
     "kraken-devtools-browserify": "0.0.3",
@@ -39,7 +40,6 @@
     "morgan": "^1.5.0",
     "newrelic": "^1.15.1",
     "node-forge": "^0.7.1",
-    "uuid": "^3.1.0",
     "passport": "^0.3.2",
     "passport-oauth": "^1.0.0",
     "passport.socketio": "^3.3.0",
@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
-    "grunt": "~0.4.1",
+    "grunt": "~0.4.5",
     "grunt-browserify": "^5.0.0",
     "grunt-cli": "^1.2.0",
     "grunt-config-dir": "^0.3.2",
