@@ -36,6 +36,7 @@
 
     {+bodyElements /}
 <script src="/components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="/components/tracekit/tracekit.js" type="text/javascript"></script>
 <script src="/js/base_bundle.js" type="text/javascript"></script>
 <script src="/components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/components/fuelux/dist/js/fuelux.min.js" type="text/javascript"></script>

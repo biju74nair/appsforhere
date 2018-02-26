@@ -28,6 +28,7 @@ var mongo = require('./lib/mongo'),
     util = require('util'),
     EventEmitter = require('events').EventEmitter,
     helmet = require('helmet'),
+    nocache = require('nocache'),
     appUtils = require('./lib/appUtils');
 
 /**
@@ -59,11 +60,12 @@ var App = module.exports = function AppConstructor() {
     this.express.use(kraken(this.options));
 
     //SECURITY HEADERS: START
+    this.express.use(nocache());
     this.express.use(helmet());
     this.express.disable('x-powered-by');
     this.express.use(helmet.contentSecurityPolicy({
         directives: {
-            scriptSrc: ["'self'", "'unsafe-inline'"],
+            scriptSrc: ["'self'", "'unsafe-inline'","s3.amazonaws.com","cdnjs.cloudflare.com","maps.googleapis.com","oss.maxcdn.com"],
         }
       }));
     //SECURITY HEADERS: END
