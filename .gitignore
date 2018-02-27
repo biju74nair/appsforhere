@@ -1,3 +1,8 @@
+#Config
+config/local.json
+production.json
+development.json
+
 **/.DS_Store
 .build/**
 .heroku/**
@@ -6,5 +11,5 @@ node_modules/**
 start.sh
 public/components/**
 .package
-config/local.json
-config/**
+
+
