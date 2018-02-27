@@ -24,7 +24,7 @@ var mongo = require('./lib/mongo'),
     configurePassport = require('./lib/passportSetup'),
     PayPalUser = require('./models/auth/payPalUser'),
     PayPalDelegatedUser = require('./models/auth/payPalDelegatedUser'),
-    Queue = require('./lib/queue'),
+    //Queue = require('./lib/queue'),
     util = require('util'),
     EventEmitter = require('events').EventEmitter,
     helmet = require('helmet'),
@@ -49,7 +49,7 @@ var App = module.exports = function AppConstructor() {
             self.configureMongo();
             appUtils.configure(config);
             configurePassport(config);
-            self.configureQueue();
+            //self.configureQueue();
             next(null, config);
         }
     };

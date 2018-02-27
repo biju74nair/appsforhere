@@ -1,7 +1,7 @@
 #Config
 config/local.json
-production.json
-development.json
+config/production.json
+config/development.json
 
 **/.DS_Store
 .build/**
