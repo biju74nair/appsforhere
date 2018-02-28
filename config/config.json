@@ -1,0 +1,152 @@
+{
+  "cluster": {
+      "workers": 1
+  },
+    "siteBaseUrl": "https://appsforhere.ebayc3.com",
+
+    "loginWithPayPal": {
+        "sandbox": {
+            "client_id": "OVERRIDE IN development.JSON",
+            "secret": "OVERRIDE IN development.JSON",
+            "identityUrl": "https://api.sandbox.paypal.com/v1/identity/openidconnect/",
+            "webappsHost": "www.sandbox.paypal.com",
+            "hereapiUrl": "https://api.sandbox.paypal.com/retail/merchant/v1/",
+            "ppaasUrl": "https://api.sandbox.paypal.com/v1/",
+            "authorizationUrl": "https://www.sandbox.paypal.com/webapps/auth/protocol/openidconnect/v1/authorize",
+            "scopes": "openid https://uri.paypal.com/services/paypalhere email https://uri.paypal.com/services/paypalattributes profile"
+        },
+        "live": {
+            "hereapiUrl": "https://api.paypal.com/retail/merchant/v1/",
+            "ppaasUrl": "https://api.paypal.com/v1/",
+            "scopes": "openid https://uri.paypal.com/services/paypalhere email https://uri.paypal.com/services/paypalattributes profile https://api.paypal.com/v1/vault/credit-card https://api.paypal.com/v1/vault/credit-card/.*",
+            "client_id": "OVERRIDE IN PRODUCTION.JSON",
+            "secret": "OVERRIDE IN PRODUCTION.JSON",
+            "return_url" : "http://localhost:8000/oauth/return"
+        }
+    },
+
+    "twilio": {
+        "sid": "dd",
+        "auth": "dd",
+        "number": "55"
+    },
+
+    "mailgun": {
+        "key": "Your MAILGUN key"
+    },
+
+    "express": {
+        "view cache": false,
+        "view engine": "js",
+        "views": "path:./.build/templates"
+    },
+
+    "view engines": {
+        "js": {
+            "module": "engine-munger",
+            "renderer": {
+                "method": "js",
+                "arguments": [
+                    { "cache": true },
+                    {
+                        "views": "config:express.views",
+                        "view engine": "config:express.view engine",
+                        "specialization": "config:specialization",
+                        "i18n": "config:i18n"
+                    }
+                ]
+            }
+        }
+    },
+
+    "i18n": {
+        "contentPath": "path:./locales",
+        "fallback": "en-US"
+    },
+
+    "mongoUrl": "mongodb://localhost/pph-loyalty",
+
+    "winston-mongodb": {
+        "dbUri": "mongodb://localhost/pph-loyalty",
+        "collection": "cappedlogs",
+        "capped": true,
+        "cappedSize": 1000000,
+        "level": "silly",
+        "storeHost": true,
+        "json": true
+    },
+
+    "socket.io": {
+        "mubsub": {
+            "size": 10000000
+        }
+    },
+
+    "middleware": {
+        "session": {
+            "module": {
+                "name": "path:./lib/krakenMongoSession",
+                "arguments": [{
+                    "secret": "paypalhere4eva",
+                    "cookie": {
+                        "path": "/",
+                        "httpOnly": true,
+                        "maxAge": null
+                    },
+                    "resave": true,
+                    "saveUninitialized": true
+                }]
+            }
+        },
+
+        "static": {
+            "module": {
+                "arguments": [ "path:./.build" ]
+            }
+        },
+
+        "logger": {
+            "module": {
+                "name": "path:./lib/noUuidLogger"
+            }
+        },
+
+        "router": {
+            "module": {
+                "arguments": [{ "directory": "path:./controllers" }]
+            }
+        },
+
+        "appsec": {
+            "route": "/:route((?!devices/activate/\\S+)(?!vault/session/\\S+)(*))"
+        },
+
+        "expressView": {
+            "priority": 100,
+            "enabled": true,
+            "module": {
+                "name": "engine-munger/lib/expressView"
+            }
+        },
+
+
+        "fileNotFound": {
+            "enabled": true,
+            "priority": 130,
+            "module": {
+                "name": "kraken-js/middleware/404",
+                "arguments": [ "errors/404" ]
+            }
+        },
+
+        "serverError": {
+            "enabled": true,
+            "priority": 140,
+            "module": {
+                "name": "kraken-js/middleware/500",
+                "arguments": [ "errors/500" ]
+            }
+        }
+
+    }
+}
